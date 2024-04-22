@@ -10,27 +10,56 @@ def exit_program():
 
 
 def list_departments():
-    pass
+    deparments = Department.get_all()
+    for department in deparments:
+        print(department)
 
 
 def find_department_by_name():
-    pass
+    name = input("Enter a department name: ")
+    department = Department.find_by_name(name)
+    print((department) if department else print(f"Department {name} not found"))
 
 
 def find_department_by_id():
-    pass
+    id_ = input("Enter a Department ID: ")
+    department = Department.find_by_id(id_)
+    print((department) if department else print(f"Department {id_} not found"))
 
 
 def create_department():
-    pass
+    name = input("Enter a name for the Department: ")
+    location = input("Enter a location for the Department: ")
+    try:
+        department = Department.create(name, location)
+        print(f"Success: {department}")
+    except Exception as exc:
+        print("Error creating department: ", exc)
 
 
 def update_department():
-    pass
+    id_ = input("Enter departments ID: ")
+    if department := Department.find_by_id(id_):
+        try:
+            name = input("Enter the departments new name: ")
+            department.name = name
+            location = input("Enter the departments new location: ")
+            department.location = location
+
+            department.update()
+            print(f"Success: {department}")
+        except Exception as exc:
+            print("Error updating department: ", exc)
+    else:
+        print(f"Department {id_} not found")
 
 
 def delete_department():
-    pass
+    id_ = input("Enter department id: ")
+    if department := Department.find_by_id(id_):
+        department.delete()
+    else:
+        print("department not found")
 
 
 # You'll implement the employee functions in the lab
